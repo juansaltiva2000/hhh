@@ -6,8 +6,6 @@ public class Empresa {
 	private HashMap<String, Transporte> transportes;
 	private Deposito depositoConRefrig;
 	private Deposito depositoSinRefrig;
-	private LinkedList<Viaje> viajes;
-	//private HashMap<Integer, Viaje> viajes; //en este caso habria que eliminar cada viaje una vez terminado
 	
 	public Empresa() {
 		transportes = new HashMap<String, Transporte>();
