@@ -1,13 +1,13 @@
 
 public class TrailerComun extends Transporte {
 
-	private boolean seguroDeCarga;
+	private double segCarga;
 	
 	
-	public TrailerComun(double pesoMax, double volumenMax, boolean tieneRefrigeracion, double costoKm, boolean seguroDeCarga) {
+	public TrailerComun(double pesoMax, double volumenMax, boolean tieneRefrigeracion, double costoKm, double segCarga) {
 		
 		super(pesoMax, volumenMax, tieneRefrigeracion, costoKm);
-		this.seguroDeCarga = seguroDeCarga;
+		this.segCarga = segCarga;
 	}
 	
 	public double obtenerCostoViaje(double distancia) {

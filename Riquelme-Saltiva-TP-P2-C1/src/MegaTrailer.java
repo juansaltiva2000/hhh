@@ -1,16 +1,17 @@
 
 public class MegaTrailer extends Transporte {
 
-	private boolean seguroDeCarga; //tal vez podria estar en Transporte directamente y en Flete se setea en false
+	private double segCarga; //tal vez podria estar en Transporte directamente y en Flete se setea en false
 	private double costoFijo;
-	private double gastoComidaDeConductor;
+	private double costoComida;
 	
-	public MegaTrailer(double pesoMax, double volumenMax, boolean tieneRefrigeracion, double costoKm, boolean seguroDeCarga, double costoFijo, double gastoComidaDeConductor) {
-		super(pesoMax, volumenMax, tieneRefrigeracion, costoKm);
-		this.seguroDeCarga = seguroDeCarga;
+	public MegaTrailer(double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida) {
+		super(cargaMax, capacidad, tieneRefrigeracion, costoKm);
+		this.segCarga = segCarga;
 		this.costoFijo = costoFijo;
-		this.gastoComidaDeConductor = gastoComidaDeConductor;
+		this.costoComida = costoComida;
 	}
+
 	
 	public double obtenerCostoViaje(double distancia) {
 		return 0;
