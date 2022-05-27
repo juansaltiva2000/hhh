@@ -4,6 +4,7 @@ import java.util.LinkedList;
 public class Deposito {
 
 	private HashMap<String,LinkedList<Paquete>> paquetes;
+	private LinkedList<Paquete> productos;
 	private boolean tieneRefrigeracion;
 	
 	public Deposito(boolean tieneRefrigeracion) {
@@ -12,7 +13,7 @@ public class Deposito {
 	}
 	
 	public boolean agregarPaquete(String destino, Paquete pac) {	
-		return paquetes.put(destino, pac);
+		return false;
 	}
 	//dado un paquete, lo agrega a la coleccion
 	

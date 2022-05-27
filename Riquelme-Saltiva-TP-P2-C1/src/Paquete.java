@@ -1,7 +1,7 @@
 
 public class Paquete {
 
-	private String destino;
+
 	private double peso;
 	private double volumen;
 	private boolean necesitaFrio;

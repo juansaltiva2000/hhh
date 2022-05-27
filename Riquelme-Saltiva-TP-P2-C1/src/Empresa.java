@@ -38,10 +38,10 @@ public class Empresa {
 		transportes.put(matricula, mt);
 	}
 	
-	public void agregarFlete(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, 
+	public void agregarFlete(String matricula, double cargaMax, double capacidad, 
 			double costoKm, int cantAcompaniantes, double costoxAcompaniante) {
 		
-		Flete f = new Flete(cargaMax, capacidad, tieneRefrigeracion, costoKm, cantAcompaniantes, costoxAcompaniante);
+		Flete f = new Flete(cargaMax, capacidad,  costoKm, cantAcompaniantes, costoxAcompaniante);
 		transportes.put(matricula, f);
 	}
 	
@@ -66,7 +66,7 @@ public class Empresa {
 	//para cargar los paquetes se va usar el metodo quitarPaquete del Deposito
 	
 	
-	public void iniciarViaje(int idTransporte) {
+	public void iniciarViaje(String string) {
 		
 	}	
 	//recorre la coleccion de transportes, hasta encontrar la key = idTransporte pasado como parametro
@@ -74,20 +74,51 @@ public class Empresa {
 	//pregunta  getEstaEnViaje(), tieneDestino(), tienePaquetesCargados()
 	//si alguna de esas es true, genera una excepcion
 	
-	public void finalizarViaje(int idTransporte) {
+	public void finalizarViaje(String string) {
 		
 	}
 	//recorre la coleccion de transportes, hasta encontrar la key = idTransporte pasado como parametro
 	//pregunta getEstaEnViaje(), si es false, genera una excepcion
 	//sino, dentro del transporte, vacía su carga, blanquea su destino y setea en false estaEnViaje	
 	
-	
-	public double obtenerCostoDeViaje(int idTransporte) {
 
-		return 0;
-	}
 	//recorre la coleccion de viajes, hasta encontrar el mismo destino --> O(n) + O(1)
 	//una vez que la encuentra, de ahi saca la distancia en km
+
+	public void agregarDestino(String string, int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean incorporarPaquete(String string, int i, int j, boolean b) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void asignarDestino(String string, String string2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void incorporarPaquete(String string, int i, double d, boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public double obtenerCostoViaje(String string) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public double cargarTransporte(String string) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Object obtenerTransporteIgual(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	//recorre la coleccion de transportes, hasta encontrar la key = idTransporte pasado como parametro
 	//llama al metodo obtenerCostoViaje pasando como argumento el destino que sacamos de viaje

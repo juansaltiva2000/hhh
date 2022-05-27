@@ -4,8 +4,8 @@ public class Flete extends Transporte {
 	private int cantAcompaniantes;
 	private double costoxAcompaniante;
 	
-	public Flete(double pesoMax, double volumenMax, boolean tieneRefrigeracion, double costoKm, int cantAcompaniantes, double costoxAcompaniante) {
-		super(pesoMax, volumenMax, tieneRefrigeracion, costoKm);
+	public Flete(double pesoMax, double volumenMax, double costoKm, int cantAcompaniantes, double costoxAcompaniante) {
+		super(pesoMax, volumenMax, false, costoKm);
 		this.cantAcompaniantes = cantAcompaniantes;
 		this.costoxAcompaniante = costoxAcompaniante;
 	}
