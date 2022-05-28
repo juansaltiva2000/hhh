@@ -11,7 +11,7 @@ public class TrailerComun extends Transporte {
 	}
 	
 	public double obtenerCostoViaje(double distancia) {
-		return 0;
+		return (costoKm*distancia) + segCarga;
 	}
 	//dada una distancia, calcula distancia*costoKm
 }

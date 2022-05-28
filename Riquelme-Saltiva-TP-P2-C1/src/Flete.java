@@ -11,7 +11,7 @@ public class Flete extends Transporte {
 	}
 	
 	public double obtenerCostoViaje(double distancia) {
-		return 0;
+		return (costoKm*distancia) + (cantAcompaniantes*costoxAcompaniante);
 	}
 	//dada una distancia, calcula (distancia*costoKm) + (cantAcompaniantes*costoxAcompaniante)
 }

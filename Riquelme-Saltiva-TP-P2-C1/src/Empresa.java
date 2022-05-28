@@ -178,4 +178,8 @@ public class Empresa {
 	//llama al metodo obtenerCostoViaje pasando como argumento el destino que sacamos de viaje*/
 
 	
+	@Override
+	public String toString() {
+		return "";
+	}
 }

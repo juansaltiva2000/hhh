@@ -6,7 +6,7 @@ public abstract class Transporte {
 	private double cargaMax;
 	private double capacidad;
 	private boolean tieneRefrigeracion;
-	private double costoKm;
+	protected double costoKm;
 	private HashMap<String,LinkedList<Paquete>> paquetes; 
 	private boolean estaEnViaje;
 	private StringBuilder destino;
@@ -16,7 +16,6 @@ public abstract class Transporte {
 		this.capacidad = capacidad;
 		this.tieneRefrigeracion = tieneRefrigeracion;
 		this.costoKm = costoKm;
-		
 		
 		paquetes = new HashMap<String, LinkedList<Paquete>>();
 		estaEnViaje = false;
@@ -34,61 +33,52 @@ public abstract class Transporte {
 	public void iniciarViaje() {
 		setEstaEnViaje(true);
 	}
-	private void setEstaEnViaje(boolean estaEnViaje) {
-		this.estaEnViaje = estaEnViaje;
-		
-	}
-
-	//setea en true el atributo estaEnViaje
 	
 	public boolean finalizarViaje() {
-		return false;
+		setEstaEnViaje(false);
+		blanquearDestino();
+		return vaciarCarga();
 	}
-	//vacía su carga, blanquea su destino y setea en false estaEnViaje
 	
 	private boolean vaciarCarga() {
-		return false;
+		return paquetes.remove(destino, paquetes.get(destino)); //no estoy segura de que esté bien
 	}
-	//elimina los elementos de paquetes
 	
 	public boolean tieneDestino() {
 		return !destino.isEmpty();
 	}
-	//devuelve si el transporte tiene destino
 	
 	public void asignarDestino(String destino) {
 		this.destino.replace(0, destino.length()-1, destino);
 	}
-	//setea el valor de destino
 	
 	private void blanquearDestino() {
 		destino.delete(0, destino.length()-1);
 	}
 	
-	
+	public boolean tienePaquetesCargados() {
+		return !paquetes.isEmpty();
+	}
+
+	private void setEstaEnViaje(boolean estaEnViaje) {
+		this.estaEnViaje = estaEnViaje;
+		
+	}
 	public boolean getEstaEnViaje() {
 		return estaEnViaje;
 	}
 	
-	public boolean tienePaquetesCargados() {
-		return false;
-	}
-	//devuelve si paquetes está vacío
-
-	public String getDestino() {
-		// TODO Auto-generated method stub
-		return "";
+	public StringBuilder getDestino() {
+		return destino;
 	}
 
 	public boolean getTieneRefrigeracion() {
-		// TODO Auto-generated method stub
-		return false;
+		return tieneRefrigeracion;
 	}
 
 	public double getCapacidad() {
 		return capacidad;
 	}
 	
-	//volumen cargado, peso cargado -> atributos o metodos?
 }
 
