@@ -23,7 +23,7 @@ public abstract class Transporte {
 		destino = "";
 	}
 	
-	public double cargarMercaderia(Deposito dep) {
+	public double cargarMercaderia(String destino, Paquete paq) {
 		return 0;
 	}
 	//se le pasa como parametro los productos que tiene el deposito y pregunta si tienen el mismo destino que el transporte
@@ -32,8 +32,13 @@ public abstract class Transporte {
 	protected abstract double obtenerCostoViaje(double distancia);
 	
 	public void iniciarViaje() {
-		estaEnViaje = false;
+		setEstaEnViaje(true);
 	}
+	private void setEstaEnViaje(boolean estaEnViaje) {
+		this.estaEnViaje = estaEnViaje;
+		
+	}
+
 	//setea en true el atributo estaEnViaje
 	
 	public boolean finalizarViaje() {
@@ -46,7 +51,7 @@ public abstract class Transporte {
 	}
 	//elimina los elementos de paquetes
 	
-	private boolean tieneDestino() {
+	public boolean tieneDestino() {
 		return destino!="";
 	}
 	//devuelve si el transporte tiene destino
@@ -69,6 +74,16 @@ public abstract class Transporte {
 		return false;
 	}
 	//devuelve si paquetes está vacío
+
+	public String getDestino() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
+	public boolean getTieneRefrigeracion() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	//volumen cargado, peso cargado -> atributos o metodos?
 }

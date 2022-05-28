@@ -35,13 +35,13 @@ public class EmpresaTest {
 	
 	@Test(expected = RuntimeException.class)
 	public void testIniciarViajeSinCarga() {
-		emp.agregarTrailerComun("AC314PI", 12000, 60, true, 5, 100);
+		emp.agregarTrailer("AC314PI", 12000, 60, true, 5, 100);
 		emp.iniciarViaje("AC314PI");
 	}
 	
 	@Test(expected = RuntimeException.class)
 	public void testFinalizarViajeNoIniciado() {
-		emp.agregarTrailerComun("AC314PI", 12000, 60, true, 5, 100);
+		emp.agregarTrailer("AC314PI", 12000, 60, true, 5, 100);
 		emp.finalizarViaje("AC314PI");
 	}
 
@@ -49,7 +49,7 @@ public class EmpresaTest {
 	public void testTrailerFrio() {
 		// distancia a cordoba = 350Km
 		// costo viaje = 350 * 5 + 100 = 1750+100 = $1850
-		emp.agregarTrailerComun("AC314PI", 12000, 60, true, 5, 100);
+		emp.agregarTrailer("AC314PI", 12000, 60, true, 5, 100);
 		emp.asignarDestino("AC314PI", "Cordoba");
 		emp.incorporarPaquete("Cordoba", 100, 5, true);
 		emp.incorporarPaquete("Cordoba", 250, 10, true);
