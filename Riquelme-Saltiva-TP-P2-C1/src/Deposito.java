@@ -23,16 +23,26 @@ public class Deposito {
 	}
 	//dado un paquete, lo elimina de la coleccion
 	
-	public double cargarTransporte(String destino, Transporte t) {
+	public double cargarTransporte(Transporte t) {
 		double paquetesCargados = 0; //se va a acumular 
+		
+		//itero dentro de la coleccion de paquetes
 		for(HashMap.Entry<String, LinkedList<Paquete>> paq : paquetes.entrySet()) { //asi se itera dentro de un hashmap?
+			
+			//busco los paquetes que tengan el mismo destino que el transporte t
 			if(t.getDestino().equals(paq.getKey())) {
+				
+				//dentro de los paquetes con el mismo destino, cargo cada uno en el transporte
 				for(Paquete prod: paq.getValue()) {
-					t.cargarMercaderia(paq.getKey(), prod);
 					
+					if(paquetesCargados<=t.getCapacidad()) {
+						paquetesCargados += prod.getVolumen();
+						t.cargarMercaderia(paq.getKey(), prod);
+						quitarPaquete(paq.getKey(), prod);
+					}
 				}
 			}
 		}
-		return 0;
+		return paquetesCargados;
 	}
 }

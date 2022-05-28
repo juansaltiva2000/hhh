@@ -7,19 +7,20 @@ public class Empresa {
 	private HashMap<String, Transporte> transportes;
 	private Deposito depositoConRefrig;
 	private Deposito depositoSinRefrig;
+	private int capacidadDepositos;
 	
 	public Empresa(String cuit, String nombre, int capacidadDeCadaDeposito) {
 		transportes = new HashMap<String, Transporte>();
 		
 		depositoConRefrig = new Deposito(true);
 		depositoSinRefrig = new Deposito(false);
+		capacidadDepositos = capacidadDeCadaDeposito;
 	}
 	
 	// Incorpora un nuevo destino y su distancia en km.
 	// Es requisito previo, para poder asignar un destino a un transporte.
 	// Si ya existe el destino se debe generar una excepción.
 	public void agregarDestino(String destino, double km) {
-		// TODO Auto-generated method stub
 		
 	} 
 	
@@ -51,7 +52,12 @@ public class Empresa {
 	// debe haber sido agregado previamente, con el método agregarDestino).
 	// Si el destino no está registrado, se debe generar una excepción.
 	public void asignarDestino(String matricula, String destino) {
-		//Iterator<String> it = transportes.iterator();
+		
+		for(HashMap.Entry<String, Transporte> t: transportes.entrySet()) {
+			if(t.getKey().equals(matricula)) {
+				t.getValue().asignarDestino(destino);
+			}
+		}
 		
 	
 	}
@@ -61,6 +67,7 @@ public class Empresa {
 	// si el depósito acorde al paquete tiene suficiente espacio disponible. */
 	public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaFrio) {
 		
+		//falta contemplar la capacidad de los depositos
 		Paquete paq = new Paquete(peso, volumen, necesitaFrio);
 		if(necesitaFrio)
 			return depositoConRefrig.agregarPaquete(destino, paq);
@@ -88,15 +95,24 @@ public class Empresa {
 					
 					//si el transporte tiene refrigeracion, saco los paquetes del depositoConRefrig
 					if(t.getValue().getTieneRefrigeracion()) { 
-						paquetesCargados = depositoConRefrig.cargarTransporte(t.getKey(), t.getValue());
+						paquetesCargados += depositoConRefrig.cargarTransporte(t.getValue());
 						
 					}
+					//sino, saco los paquetes del depositoSinRefrig
+					else {
+						paquetesCargados += depositoSinRefrig.cargarTransporte(t.getValue());
+					}
 				}
+				//si el transporte ya esta en viaje o no tiene destino, lanzo una excepcion
 				else {
-					throw new RuntimeException("El camión ya está en viaje y/o tiene un destino asginado");
+					throw new RuntimeException("El camión ya está en viaje y/o no tiene un destino asignado");
 				}
 			}
+			//lanza una excepcion si se ingresó una matricula que no existe
+			else
+				throw new RuntimeException("No existe un transporte con esa matrícula");
 		}
+		//retorna el valor que se fue acumulando en paquetesCargados
 		return paquetesCargados;
 	}	
 	
@@ -116,16 +132,27 @@ public class Empresa {
 	
 	
 	public void iniciarViaje(String matricula) {
-		
+		for(HashMap.Entry<String, Transporte> t: transportes.entrySet()) {
+			if(t.getKey().equals(matricula)) {
+				if(t.getValue().getEstaEnViaje() || !t.getValue().tienePaquetesCargados()) {
+					throw new RuntimeException("El transporte ya está en viaje,  o no tiene paquetes cargados");
+				}
+				else {
+					t.getValue().iniciarViaje();
+				}
+			}
+		}
 	}	
 	/*recorre la coleccion de transportes, hasta encontrar la key = idTransporte pasado como parametro
 	//dentro del transporte, cambia el valor de estaEnViaje
 	//pregunta  getEstaEnViaje(), tieneDestino(), tienePaquetesCargados()
 	//si alguna de esas es true, genera una excepcion
+	*/
 	
 	public void finalizarViaje(String matricula) {
 		
 	}
+	
 	/*recorre la coleccion de transportes, hasta encontrar la key = idTransporte pasado como parametro
 	//pregunta getEstaEnViaje(), si es false, genera una excepcion
 	//sino, dentro del transporte, vacía su carga, blanquea su destino y setea en false estaEnViaje	

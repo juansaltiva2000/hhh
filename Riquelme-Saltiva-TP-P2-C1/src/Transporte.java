@@ -7,9 +7,9 @@ public abstract class Transporte {
 	private double capacidad;
 	private boolean tieneRefrigeracion;
 	private double costoKm;
-	private HashMap<String,LinkedList<Paquete>> paquetes;
+	private HashMap<String,LinkedList<Paquete>> paquetes; 
 	private boolean estaEnViaje;
-	private String destino;
+	private StringBuilder destino;
 	
 	public Transporte(double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm) {
 		this.cargaMax = cargaMax;
@@ -18,13 +18,13 @@ public abstract class Transporte {
 		this.costoKm = costoKm;
 		
 		
-		paquetes = new HashMap<String,LinkedList<Paquete>>();
+		paquetes = new HashMap<String, LinkedList<Paquete>>();
 		estaEnViaje = false;
-		destino = "";
+		destino = new StringBuilder();
 	}
 	
-	public double cargarMercaderia(String destino, Paquete paq) {
-		return 0;
+	public boolean cargarMercaderia(String destino, Paquete paq) {
+		return paquetes.get(destino).add(paq);
 	}
 	//se le pasa como parametro los productos que tiene el deposito y pregunta si tienen el mismo destino que el transporte
 	//en caso verdadero, carga aquellos productos que coincidan, en caso falso no hace nada
@@ -52,17 +52,17 @@ public abstract class Transporte {
 	//elimina los elementos de paquetes
 	
 	public boolean tieneDestino() {
-		return destino!="";
+		return !destino.isEmpty();
 	}
 	//devuelve si el transporte tiene destino
 	
-	private void asignarDestino(String destino) {
-		this.destino = destino;
+	public void asignarDestino(String destino) {
+		this.destino.replace(0, destino.length()-1, destino);
 	}
 	//setea el valor de destino
 	
 	private void blanquearDestino() {
-		destino = "";
+		destino.delete(0, destino.length()-1);
 	}
 	
 	
@@ -83,6 +83,10 @@ public abstract class Transporte {
 	public boolean getTieneRefrigeracion() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public double getCapacidad() {
+		return capacidad;
 	}
 	
 	//volumen cargado, peso cargado -> atributos o metodos?
