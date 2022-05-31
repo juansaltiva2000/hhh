@@ -7,7 +7,8 @@ public class Empresa {
 	private HashMap<String, Transporte> transportes;
 	private Deposito depositoConRefrig;
 	private Deposito depositoSinRefrig;
-	private int capacidadDepositos;
+	private double capacidadDepositos;
+	private HashMap<String, Integer> destinos;
 	
 	public Empresa(String cuit, String nombre, int capacidadDeCadaDeposito) {
 		transportes = new HashMap<String, Transporte>();
@@ -68,7 +69,8 @@ public class Empresa {
 	public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaFrio) {
 		
 		//falta contemplar la capacidad de los depositos
-		Paquete paq = new Paquete(peso, volumen, necesitaFrio);
+		Paquete paq = new Paquete(peso, volumen, necesitaFrio); //fn aux hayEspacioParaElPaquete
+	
 		if(necesitaFrio)
 			return depositoConRefrig.agregarPaquete(destino, paq);
 		else
@@ -86,35 +88,25 @@ public class Empresa {
 	
 	public double cargarTransporte(String matricula) {
 		double paquetesCargados = 0;
-		//busco el transporte por su matricula
-		for(HashMap.Entry<String, Transporte> t: transportes.entrySet()) {
-			if(t.getKey().equals(matricula)) {
-				
-				//una vez que lo encontré, verifico que no esté en viaje ni tenga un destino asignado
-				if(!t.getValue().getEstaEnViaje() || !t.getValue().tieneDestino()) {
-					
-					//si el transporte tiene refrigeracion, saco los paquetes del depositoConRefrig
-					if(t.getValue().getTieneRefrigeracion()) { 
-						paquetesCargados += depositoConRefrig.cargarTransporte(t.getValue());
-						
-					}
-					//sino, saco los paquetes del depositoSinRefrig
+			if(transportes.containsKey(matricula)) {
+				if(!transportes.get(matricula).estaEnViaje() && !transportes.get(matricula).tienePaquetesCargados()) { 
+					if(transportes.get(matricula).getTieneRefrigeracion()) {
+						paquetesCargados += depositoConRefrig.cargarTransporte(transportes.get(matricula));
+					}	
 					else {
-						paquetesCargados += depositoSinRefrig.cargarTransporte(t.getValue());
+						paquetesCargados += depositoSinRefrig.cargarTransporte(transportes.get(matricula));
 					}
 				}
-				//si el transporte ya esta en viaje o no tiene destino, lanzo una excepcion
 				else {
 					throw new RuntimeException("El camión ya está en viaje y/o no tiene un destino asignado");
 				}
-			}
-			//lanza una excepcion si se ingresó una matricula que no existe
-			else
-				throw new RuntimeException("No existe un transporte con esa matrícula");
 		}
-		//retorna el valor que se fue acumulando en paquetesCargados
+			else {
+				throw new RuntimeException("No existe un camión con esa matrícula en la empresa");
+			}
 		return paquetesCargados;
-	}	
+	}
+
 	
 	/*recorre la coleccion de transportes, hasta encontrar la key = idTransporte pasado como parametro
 	//una vez que lo encuentra, pregunta si esta en viaje
@@ -132,39 +124,30 @@ public class Empresa {
 	
 	
 	public void iniciarViaje(String matricula) {
-		for(HashMap.Entry<String, Transporte> t: transportes.entrySet()) {
-			if(t.getKey().equals(matricula)) {
-				if(t.getValue().getEstaEnViaje() || !t.getValue().tienePaquetesCargados()) {
-					throw new RuntimeException("El transporte ya está en viaje,  o no tiene paquetes cargados");
-				}
-				else {
-					t.getValue().iniciarViaje();
-				}
+		
+		if(transportes.containsKey(matricula)) {
+			if(transportes.get(matricula).estaEnViaje() || !transportes.get(matricula).tienePaquetesCargados()) {
+				throw new RuntimeException("El transporte ya está en viaje,  o no tiene paquetes cargados");
+			}
+			else {
+				transportes.get(matricula).iniciarViaje();
 			}
 		}
+		else {
+			throw new RuntimeException("No existe un camión con esa matrícula en la empresa");
+		}
+		
+		
 	}	
-	/*recorre la coleccion de transportes, hasta encontrar la key = idTransporte pasado como parametro
-	//dentro del transporte, cambia el valor de estaEnViaje
-	//pregunta  getEstaEnViaje(), tieneDestino(), tienePaquetesCargados()
-	//si alguna de esas es true, genera una excepcion
-	*/
 	
 	public void finalizarViaje(String matricula) {
 		
 	}
 	
-	/*recorre la coleccion de transportes, hasta encontrar la key = idTransporte pasado como parametro
-	//pregunta getEstaEnViaje(), si es false, genera una excepcion
-	//sino, dentro del transporte, vacía su carga, blanquea su destino y setea en false estaEnViaje	
-	
-
-	//recorre la coleccion de viajes, hasta encontrar el mismo destino --> O(n) + O(1)
-	//una vez que la encuentra, de ahi saca la distancia en km
-
-	
-*/
 	public double obtenerCostoViaje(String matricula) {
-		// TODO Auto-generated method stub
+		if(transportes.get(matricula).estaEnViaje()) {
+			//transportes.get(matricula).obtenerCostoViaje();
+		}
 		return 0;
 	}
 

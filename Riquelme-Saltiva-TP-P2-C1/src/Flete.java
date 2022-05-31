@@ -10,6 +10,7 @@ public class Flete extends Transporte {
 		this.costoxAcompaniante = costoxAcompaniante;
 	}
 	
+	@Override
 	public double obtenerCostoViaje(double distancia) {
 		return (costoKm*distancia) + (cantAcompaniantes*costoxAcompaniante);
 	}

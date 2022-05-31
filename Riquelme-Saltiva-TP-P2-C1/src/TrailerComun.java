@@ -10,6 +10,7 @@ public class TrailerComun extends Transporte {
 		this.segCarga = segCarga;
 	}
 	
+	@Override
 	public double obtenerCostoViaje(double distancia) {
 		return (costoKm*distancia) + segCarga;
 	}

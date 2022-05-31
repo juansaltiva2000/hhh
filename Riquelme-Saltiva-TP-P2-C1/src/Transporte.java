@@ -7,7 +7,7 @@ public abstract class Transporte {
 	private double capacidad;
 	private boolean tieneRefrigeracion;
 	protected double costoKm;
-	private HashMap<String,LinkedList<Paquete>> paquetes; 
+	private LinkedList<Paquete> paquetes; 
 	private boolean estaEnViaje;
 	private StringBuilder destino;
 	
@@ -17,16 +17,17 @@ public abstract class Transporte {
 		this.tieneRefrigeracion = tieneRefrigeracion;
 		this.costoKm = costoKm;
 		
-		paquetes = new HashMap<String, LinkedList<Paquete>>();
+		paquetes = new LinkedList<Paquete>();
 		estaEnViaje = false;
 		destino = new StringBuilder();
 	}
 	
-	public boolean cargarMercaderia(String destino, Paquete paq) {
-		return paquetes.get(destino).add(paq);
+	public boolean cargarMercaderia(Paquete paq) {
+		if(tieneEspacioDisponible(paq)) {
+			return paquetes.add(paq);
+		}
+		return false;
 	}
-	//se le pasa como parametro los productos que tiene el deposito y pregunta si tienen el mismo destino que el transporte
-	//en caso verdadero, carga aquellos productos que coincidan, en caso falso no hace nada
 	
 	protected abstract double obtenerCostoViaje(double distancia);
 	
@@ -41,7 +42,11 @@ public abstract class Transporte {
 	}
 	
 	private boolean vaciarCarga() {
-		return paquetes.remove(destino, paquetes.get(destino)); //no estoy segura de que esté bien
+		boolean ret = true;
+		for(Paquete p: paquetes) {
+			ret = ret && paquetes.remove(p);
+		}
+		return ret;
 	}
 	
 	public boolean tieneDestino() {
@@ -64,8 +69,8 @@ public abstract class Transporte {
 		this.estaEnViaje = estaEnViaje;
 		
 	}
-	public boolean getEstaEnViaje() {
-		return estaEnViaje;
+	public boolean estaEnViaje() {
+		return estaEnViaje == true;
 	}
 	
 	public StringBuilder getDestino() {
@@ -76,9 +81,11 @@ public abstract class Transporte {
 		return tieneRefrigeracion;
 	}
 
-	public double getCapacidad() {
-		return capacidad;
+	public boolean tieneEspacioDisponible(Paquete paq) {
+		return paq.getVolumen() - capacidad >= 0;
 	}
+	
+	
 	
 }
 

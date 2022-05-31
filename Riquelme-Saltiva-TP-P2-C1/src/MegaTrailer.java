@@ -12,7 +12,7 @@ public class MegaTrailer extends Transporte {
 		this.costoComida = costoComida;
 	}
 
-	
+	@Override
 	public double obtenerCostoViaje(double distancia) {
 		return (costoKm*distancia)+ segCarga + costoFijo + costoComida;
 	}
