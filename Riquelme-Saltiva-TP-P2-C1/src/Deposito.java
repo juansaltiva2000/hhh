@@ -14,43 +14,36 @@ public class Deposito {
 	
 	public boolean agregarPaquete(String destino, Paquete paq) {	
 		boolean ret = true; 
-		if(hayEspacioDisponible(paq)) {
-			if(paquetes.containsKey(destino)) {
-				ret = ret && paquetes.get(destino).add(paq);
-				capacidadActual -= paq.getVolumen();
-
-			}
-			else {
-				paquetes.put(destino, new LinkedList<Paquete>());
-				ret = ret && paquetes.get(destino).add(paq);
-				capacidadActual -= paq.getVolumen();
-
-			}
+		if(paquetes.containsKey(destino)) {
+			ret = ret && paquetes.get(destino).add(paq);
+			capacidadActual -= paq.getVolumen();
 		}
-		else
-			return false;
-		
+		else {
+			paquetes.put(destino, new LinkedList<Paquete>());
+			ret = ret && paquetes.get(destino).add(paq);
+			capacidadActual -= paq.getVolumen();
+		}
 		return ret;
 	}
-	
+
+
 	public boolean quitarPaquete(String destino, Paquete pac) {  //se va a tener que instanciar este metodo cuando se agreguen al transporte
 		capacidadActual -= pac.getVolumen();
 		return paquetes.remove(destino, pac);
 	}
-	//dado un paquete, lo elimina de la coleccion
-	
+
 	public double cargarTransporte(Transporte t) {	
 		double paquetesCargados = 0;  
 		
-		for(Paquete paq: paquetes.get(t.getDestino())) {
+		for(Paquete paq: paquetes.get(t.getDestino())) { //hay un problema con stringbuilder
 			t.cargarMercaderia(paq);
 			paquetesCargados += paq.getVolumen();
 		}
 		return paquetesCargados;
 	}
 	
-
-	private boolean hayEspacioDisponible(Paquete paq) {
-		return capacidadActual - paq.getVolumen() >= 0;
+	public double capacidadActual() {
+		return capacidadActual;
 	}
+	
 }

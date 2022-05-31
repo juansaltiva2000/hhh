@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.LinkedList;
 
 public abstract class Transporte {
@@ -54,11 +53,11 @@ public abstract class Transporte {
 	}
 	
 	public void asignarDestino(String destino) {
-		this.destino.replace(0, destino.length()-1, destino);
+		this.destino.replace(0, destino.length(), destino);
 	}
 	
 	private void blanquearDestino() {
-		destino.delete(0, destino.length()-1);
+		destino.delete(0, destino.length());
 	}
 	
 	public boolean tienePaquetesCargados() {
@@ -73,18 +72,21 @@ public abstract class Transporte {
 		return estaEnViaje == true;
 	}
 	
-	public StringBuilder getDestino() {
-		return destino;
+	public String getDestino() {
+		return destino.toString();
 	}
 
 	public boolean getTieneRefrigeracion() {
 		return tieneRefrigeracion;
 	}
 
-	public boolean tieneEspacioDisponible(Paquete paq) {
+	private boolean tieneEspacioDisponible(Paquete paq) {
 		return paq.getVolumen() - capacidad >= 0;
 	}
 	
+	public boolean equals(Transporte t) {
+		return false;
+	}
 	
 	
 }

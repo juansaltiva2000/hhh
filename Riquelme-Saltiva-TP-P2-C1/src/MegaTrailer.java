@@ -1,7 +1,7 @@
 
 public class MegaTrailer extends Transporte {
 
-	private double segCarga; //tal vez podria estar en Transporte directamente y en Flete se setea en false
+	private double segCarga; 
 	private double costoFijo;
 	private double costoComida;
 	
