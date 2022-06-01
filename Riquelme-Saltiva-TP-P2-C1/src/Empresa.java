@@ -70,14 +70,25 @@ public class Empresa {
 	public boolean incorporarPaquete(String destino, double peso, double volumen, boolean necesitaFrio) {
 		Paquete paq = new Paquete(peso, volumen, necesitaFrio); 
 
-		if(necesitaFrio && tieneEspacioDisponible(depositoConRefrig))
-			return depositoConRefrig.agregarPaquete(destino, paq);
+		if(necesitaFrio)
+			return incorporarPaqueteConRefrig(destino, paq);
 		
-		else if (!necesitaFrio && tieneEspacioDisponible(depositoSinRefrig))
-			return depositoSinRefrig.agregarPaquete(destino, paq);
-
-		else
-			throw new RuntimeException("El depósito no tiene espacio disponible para incorporar paquetes");
+		else 
+			return incorporarPaqueteSinRefrig(destino, paq);
+	}
+	
+	private boolean incorporarPaqueteConRefrig(String destino, Paquete paq) {
+		if(depositoConRefrig.tieneEspacioDisponible(paq, capacidadDepositos)) {
+			return depositoConRefrig.agregarPaquete(destino, paq, capacidadDepositos);
+		}
+		return false;
+	}
+	
+	private boolean incorporarPaqueteSinRefrig(String destino, Paquete paq) {
+		if(depositoSinRefrig.tieneEspacioDisponible(paq, capacidadDepositos)) {
+			return depositoSinRefrig.agregarPaquete(destino, paq, capacidadDepositos);
+		}
+		return false;
 	}
 	
 
@@ -132,7 +143,7 @@ public class Empresa {
 	}
 	
 	public boolean tieneEspacioDisponible(Deposito dep) {
-		return capacidadDepositos - dep.capacidadActual() >= 0;
+		return capacidadDepositos - dep.cargaActual() >= 0;
 	}
 	
 	@Override
