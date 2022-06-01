@@ -8,7 +8,7 @@ public abstract class Transporte {
 	protected double costoKm;
 	private LinkedList<Paquete> paquetes; 
 	private boolean estaEnViaje;
-	private StringBuilder destino;
+	private String destino;
 	
 	public Transporte(double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm) {
 		this.cargaMax = cargaMax;
@@ -18,7 +18,7 @@ public abstract class Transporte {
 		
 		paquetes = new LinkedList<Paquete>();
 		estaEnViaje = false;
-		destino = new StringBuilder();
+		destino = "";
 	}
 	
 	public boolean cargarMercaderia(Paquete paq) {
@@ -31,11 +31,11 @@ public abstract class Transporte {
 	protected abstract double obtenerCostoViaje(double distancia);
 	
 	public void iniciarViaje() {
-		setEstaEnViaje(true);
+		estaEnViaje = true;
 	}
 	
 	public boolean finalizarViaje() {
-		setEstaEnViaje(false);
+		estaEnViaje = false;
 		blanquearDestino();
 		return vaciarCarga();
 	}
@@ -53,21 +53,17 @@ public abstract class Transporte {
 	}
 	
 	public void asignarDestino(String destino) {
-		this.destino.replace(0, destino.length(), destino);
+		this.destino = destino;
 	}
 	
 	private void blanquearDestino() {
-		destino.delete(0, destino.length());
+		destino = "";
 	}
 	
 	public boolean tienePaquetesCargados() {
 		return !paquetes.isEmpty();
 	}
 
-	private void setEstaEnViaje(boolean estaEnViaje) {
-		this.estaEnViaje = estaEnViaje;
-		
-	}
 	public boolean estaEnViaje() {
 		return estaEnViaje == true;
 	}
@@ -81,7 +77,7 @@ public abstract class Transporte {
 	}
 
 	private boolean tieneEspacioDisponible(Paquete paq) {
-		return paq.getVolumen() - capacidad >= 0;
+		return capacidad - paq.getVolumen() >= 0;
 	}
 	
 	public boolean equals(Transporte t) {

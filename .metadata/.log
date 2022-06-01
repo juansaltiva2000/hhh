@@ -455,3 +455,9 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.jdt.junit 4 0 2022-05-31 16:15:00.875
 !MESSAGE No tests found with test runner 'JUnit 5'.
+
+!ENTRY org.eclipse.jdt.junit 4 0 2022-05-31 20:35:03.680
+!MESSAGE No tests found with test runner 'JUnit 5'.
+
+!ENTRY org.eclipse.jdt.junit 4 0 2022-05-31 20:35:29.807
+!MESSAGE No tests found with test runner 'JUnit 5'.
