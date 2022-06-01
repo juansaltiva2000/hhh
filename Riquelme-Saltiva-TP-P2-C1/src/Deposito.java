@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Deposito {
@@ -26,16 +27,15 @@ public class Deposito {
 		return ret;
 	}
 
-
-	public boolean quitarPaquete(String destino, Paquete pac) {  //se va a tener que instanciar este metodo cuando se agreguen al transporte
-		capacidadActual -= pac.getVolumen();
-		return paquetes.remove(destino, pac);
+	public boolean quitarPaquete(String destino, Paquete paq) {  //se va a tener que instanciar este metodo cuando se agreguen al transporte
+		capacidadActual -= paq.getVolumen();
+		return paquetes.remove(destino, paq);
 	}
 
 	public double cargarTransporte(Transporte t) {	
 		double paquetesCargados = 0;  
 		
-		for(Paquete paq: paquetes.get(t.getDestino())) { //hay un problema con stringbuilder
+		for(Paquete paq: paquetes.get(t.getDestino())) { 
 			t.cargarMercaderia(paq);
 			paquetesCargados += paq.getVolumen();
 		}

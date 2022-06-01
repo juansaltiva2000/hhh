@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public abstract class Transporte {
@@ -34,18 +35,18 @@ public abstract class Transporte {
 		estaEnViaje = true;
 	}
 	
-	public boolean finalizarViaje() {
+	public void finalizarViaje() {
 		estaEnViaje = false;
 		blanquearDestino();
-		return vaciarCarga();
+		vaciarCarga();
 	}
 	
-	private boolean vaciarCarga() {
-		boolean ret = true;
-		for(Paquete p: paquetes) {
-			ret = ret && paquetes.remove(p);
+	private void vaciarCarga() {
+		Iterator<Paquete> iterador = paquetes.iterator();
+		while(iterador.hasNext()) {
+			iterador.next();
+			iterador.remove();
 		}
-		return ret;
 	}
 	
 	public boolean tieneDestino() {

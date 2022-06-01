@@ -7,16 +7,23 @@ public class Empresa {
 	private HashMap<String, Transporte> transportes;
 	private Deposito depositoConRefrig;
 	private Deposito depositoSinRefrig;
-	private double capacidadDepositos;
 	private HashMap<String, Integer> destinos;
+	
+	private String cuit;
+	private String nombre;
+	private double capacidadDepositos;
 	
 	public Empresa(String cuit, String nombre, int capacidadDeCadaDeposito) {
 		transportes = new HashMap<String, Transporte>();
 		
 		depositoConRefrig = new Deposito(true);
 		depositoSinRefrig = new Deposito(false);
-		capacidadDepositos = capacidadDeCadaDeposito;
 		destinos = new HashMap<String, Integer>();
+		
+		this.cuit = cuit;
+		this.nombre = nombre;
+		capacidadDepositos = capacidadDeCadaDeposito;
+		
 	}
 	
 	public void agregarDestino(String destino, int km) {
@@ -77,51 +84,36 @@ public class Empresa {
 	
 	public double cargarTransporte(String matricula) {
 		double paquetesCargados = 0;
-			if(transportes.containsKey(matricula)) {
-				if(!transportes.get(matricula).estaEnViaje() && !transportes.get(matricula).tienePaquetesCargados()) { 
-					if(transportes.get(matricula).getTieneRefrigeracion()) {
-						paquetesCargados += depositoConRefrig.cargarTransporte(transportes.get(matricula));
-					}	
-					else {
-						paquetesCargados += depositoSinRefrig.cargarTransporte(transportes.get(matricula));
-					}
-				}
-				else {
-					throw new RuntimeException("El camión ya está en viaje y/o no tiene un destino asignado");
-				}
-		}
+		if(!transportes.get(matricula).estaEnViaje() && !transportes.get(matricula).tienePaquetesCargados()) { 
+			if(transportes.get(matricula).getTieneRefrigeracion()) {
+				paquetesCargados += depositoConRefrig.cargarTransporte(transportes.get(matricula));
+			}	
 			else {
-				throw new RuntimeException("No existe un camión con esa matrícula en la empresa");
+				paquetesCargados += depositoSinRefrig.cargarTransporte(transportes.get(matricula));
 			}
+		}
+		else {
+			throw new RuntimeException("El camión ya está en viaje y/o no tiene un destino asignado");
+		}
 		return paquetesCargados;
 	}	
 	
 	public void iniciarViaje(String matricula) {
-		
-		if(transportes.containsKey(matricula)) {
-			if(transportes.get(matricula).estaEnViaje() || !transportes.get(matricula).tienePaquetesCargados()) {
-				throw new RuntimeException("El transporte ya está en viaje,  o no tiene paquetes cargados");
-			}
-			else {
-				transportes.get(matricula).iniciarViaje();
-			}
+
+		if(transportes.get(matricula).estaEnViaje() || !transportes.get(matricula).tienePaquetesCargados()) {
+			throw new RuntimeException("El transporte ya está en viaje,  o no tiene paquetes cargados");
 		}
 		else {
-			throw new RuntimeException("No existe un camión con esa matrícula en la empresa");
+			transportes.get(matricula).iniciarViaje();
 		}			
 	}	
-	
+
 	public void finalizarViaje(String matricula) {
-		if(transportes.containsKey(matricula)) {
-			if(transportes.get(matricula).estaEnViaje()) {
-				transportes.get(matricula).finalizarViaje();
-			}
-			else {
-				throw new RuntimeException("El camión con esa matrícula no está actualmente en viaje");
-			}
+		if(transportes.get(matricula).estaEnViaje()) {
+			transportes.get(matricula).finalizarViaje();
 		}
 		else {
-			throw new RuntimeException("No existe un camión con esa matrícula en la empresa");
+			throw new RuntimeException("El camión con esa matrícula no está actualmente en viaje");
 		}
 	}
 	
@@ -133,11 +125,10 @@ public class Empresa {
 		else {
 			throw new RuntimeException("El camión con esa matrícula no está actualmente en viaje");
 		}
-
 	}
 
 	public String obtenerTransporteIgual(String matricula) {
-		return null;
+		return "";
 	}
 	
 	public boolean tieneEspacioDisponible(Deposito dep) {
@@ -146,6 +137,12 @@ public class Empresa {
 	
 	@Override
 	public String toString() {
-		return "";
+		StringBuilder st = new StringBuilder();
+		st.append("Empresa: ");
+		st.append(nombre);
+		st.append(", CUIT: ");
+		st.append(cuit);
+		
+		return st.toString();
 	}
 }
