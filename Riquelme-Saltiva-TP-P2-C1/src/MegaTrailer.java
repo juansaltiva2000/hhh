@@ -16,5 +16,5 @@ public class MegaTrailer extends Transporte {
 	public double obtenerCostoViaje(double distancia) {
 		return (costoKm*distancia)+ segCarga + costoFijo + costoComida;
 	}
-	//
+	
 }

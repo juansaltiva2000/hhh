@@ -35,6 +35,7 @@ public class CodigoCliente {
 		System.out.println(e.toString());
 		e.finalizarViaje("AA333XQ");
 		System.out.println(e.toString());
+
 		}
 
 }

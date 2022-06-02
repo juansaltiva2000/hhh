@@ -1,5 +1,3 @@
-import java.util.LinkedList;
-
 public class Paquete {
 
 	private double peso;
@@ -24,15 +22,10 @@ public class Paquete {
 		return necesitaFrio;
 	}
 	
-	public boolean equals(Paquete paq) {
-		return paq.getNecesitaFrio() == necesitaFrio && paq.peso == peso && paq.volumen == volumen;
+	@Override
+	public boolean equals(Object o) {
+		Paquete paq = (Paquete) o;
+		return paq.necesitaFrio == necesitaFrio && paq.peso == peso && paq.volumen == volumen;
 	}
 
-	public boolean paqueteEsIgualAOtro(LinkedList<Paquete> paquetes) {
-		boolean ret = false;
-		for(Paquete paq: paquetes) {
-			ret = ret || this.equals(paq);
-		}
-		return ret;
-	}
 }

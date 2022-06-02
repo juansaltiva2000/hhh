@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Deposito {
@@ -33,17 +34,22 @@ public class Deposito {
 
 	public boolean quitarPaquete(String destino, Paquete paq) {  
 		cargaActual -= paq.getVolumen();
-		return paquetes.remove(destino, paq);
+		LinkedList<Paquete> p = paquetes.get(destino);
+		return p.remove(paq);
 	}
 
 	public double cargarTransporte(Transporte t) {	
-		double paquetesCargados = 0;  
+		double volumenCargado = 0; 
+		Iterator<Paquete> paq = paquetes.get(t.getDestino()).iterator();
 		
-		for(Paquete paq: paquetes.get(t.getDestino())) { 
-			t.cargarMercaderia(paq);
-			paquetesCargados += paq.getVolumen();
+		while(paq.hasNext()) {
+			Paquete p = (Paquete)paq.next();
+			t.cargarMercaderia(p);
+			volumenCargado += p.getVolumen();
+			cargaActual -= p.getVolumen();
+			paq.remove();	
 		}
-		return paquetesCargados;
+		return volumenCargado;
 	}
 	
 	public boolean tieneEspacioDisponible(Paquete paq, double capacidadMax) {
