@@ -92,7 +92,6 @@ public class Empresa {
 	}
 	
 
-	
 	public double cargarTransporte(String matricula) {
 		double paquetesCargados = 0;
 		if(!transportes.get(matricula).estaEnViaje() && !transportes.get(matricula).tienePaquetesCargados()) { 
@@ -139,21 +138,44 @@ public class Empresa {
 	}
 
 	public String obtenerTransporteIgual(String matricula) {
+		for(String mat: transportes.keySet()) {
+			if(transportes.get(mat).getClass().equals(transportes.get(matricula).getClass())) {
+				if(transportes.get(mat).equals(transportes.get(matricula))) {
+					return mat;
+				}
+			}
+			else
+				return "No hay un transporte igual";
+		}
 		return "";
 	}
-	
-	public boolean tieneEspacioDisponible(Deposito dep) {
-		return capacidadDepositos - dep.cargaActual() >= 0;
-	}
+//	public String obtenerTransporteIgual(String matricula) {
+//		for(HashMap.Entry<String, Transporte> tr : transportes.entrySet()) {
+//			if(tr.getValue().getClass().equals(transportes.get(matricula).getClass())) {
+//				if(tr.getValue().equals(transportes.get(matricula))) {
+//					return tr.getKey();
+//				}
+//			}		
+//		}
+//		return "No existe un transporte igual al pasado por parametro";
+//	}
 	
 	@Override
 	public String toString() {
 		StringBuilder st = new StringBuilder();
 		st.append("Empresa: ");
 		st.append(nombre);
-		st.append(", CUIT: ");
+		st.append("\n");
+		st.append("CUIT: ");
 		st.append(cuit);
+		st.append("\n");
+		st.append("Destinos: ");
+		st.append(destinos.toString());
+		st.append("\n");
+		st.append("Transportes: ");
+		st.append(transportes.toString());
 		
 		return st.toString();
 	}
+
 }

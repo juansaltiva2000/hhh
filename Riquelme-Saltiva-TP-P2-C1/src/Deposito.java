@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Deposito {
@@ -45,10 +44,6 @@ public class Deposito {
 			paquetesCargados += paq.getVolumen();
 		}
 		return paquetesCargados;
-	}
-	
-	public double cargaActual() {
-		return cargaActual;
 	}
 	
 	public boolean tieneEspacioDisponible(Paquete paq, double capacidadMax) {
